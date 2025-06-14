@@ -12,7 +12,7 @@ const projects = [
     },
     {
         id: 2,
-        title: "Voxel Benchmarks for 3D Pathfinding: Sandstone, Descent, and Industrial Plants",
+        title: "Voxel Benchmarks for 3D Pathfinding",
         description: "A set of three voxel benchmarks from varied applications for 3D pathfinding algorithms.",
         image: "/projects/voxel_benchmark.png",
         tags: ["Pathfinding", "3D", "Benchmark"],
@@ -101,39 +101,11 @@ export const ProjectsSection = () => {
                 <a
                     className="cosmic-button w-fit flex items-center mx-auto gap-2"
                     target="_blank"
-                    href="https://github.com/thomasnobes"
+                    href="https://github.com/thomasnobesmonash"
                 >
                     Check My GitHub <ArrowRight size={16} />
                 </a>
             </div> */}
         </div>
     </section>
-                        
-                        
-                        // <h3 className="font-semibold text-lg mb-2">{project.title}</h3>
-                        // <p className="text-sm text-muted-foreground mb-4">{project.description}</p>
-                        // <div className="flex flex-wrap gap-2 mb-4">
-                        //     {project.tags.map((tag, index) => (
-                        //         <span key={index} className="bg-secondary/50 text-primary px-3 py-1 rounded-full text-xs">
-                        //             {tag}
-                        //         </span>
-                        //     ))}
-                        // </div>
-                        // <div className="flex justify-end space-x-2">
-                        //     {project.paperUrl && (
-                        //         <a href={project.paperUrl} target="_blank" rel="noopener noreferrer" className="cosmic-button">
-                        //             Paper
-                        //         </a>
-                        //     )}
-                        //     {project.gitUrl && (
-                        //         <a href={project.gitUrl} target="_blank" rel="noopener noreferrer" className="cosmic-button">
-                        //             Code
-                        //         </a>
-                        //     )}
-                        // </div>
-            //         </div>
-            //     ))}
-            // </div>
-        // </div>
-    // </section>
 };
