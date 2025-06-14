@@ -10,3 +10,6 @@ TODO:
 - Use real email or create new business email
 - Resize Images in Projects tiles so that they fit vertically
 - Make night mode the default site
+- Center "Back to Top"
+- Make "View My Work" button hover similar to "Get In Touch"
+- Make "MySkills" cateogry buttons hover similar to "Get In Touch"
