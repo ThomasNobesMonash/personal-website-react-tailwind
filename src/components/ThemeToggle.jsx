@@ -4,35 +4,35 @@ import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 
 export const ThemeToggle = () => {
-    const [isDarkMode, setIsDarkMode] = useState(false);
+    const [isLightMode, setisLightMode] = useState(false);
     
     useEffect(() => {
         const storedTheme = localStorage.getItem("theme");
         if (storedTheme) {
-            if (storedTheme === "dark") {
-                document.documentElement.classList.add("dark");
-                setIsDarkMode(true);
+            if (storedTheme === "light") {
+                document.documentElement.classList.add("light");
+                setisLightMode(true);
             } else {
-                document.documentElement.classList.remove("dark");
-                setIsDarkMode(false);
+                document.documentElement.classList.remove("light");
+                setisLightMode(false);
             }
         } else {
             // Default to light mode if no preference is stored
-            document.documentElement.classList.remove("dark");
-            setIsDarkMode(false);
+            document.documentElement.classList.remove("light");
+            setisLightMode(false);
         }
     }, [])
     
     const toggleTheme = () => {
-        if (isDarkMode) {
-            document.documentElement.classList.remove("dark");
+        if (isLightMode) {
+            document.documentElement.classList.remove("light");
             localStorage.setItem("theme", "light");
-            setIsDarkMode(false);
+            setisLightMode(false);
         }
         else {
-            document.documentElement.classList.add("dark");
-            localStorage.setItem("theme", "dark");
-            setIsDarkMode(true);
+            document.documentElement.classList.add("light");
+            localStorage.setItem("theme", "light");
+            setisLightMode(true);
         }
     };
         
@@ -45,10 +45,10 @@ export const ThemeToggle = () => {
                 "focus:outline:hidden"
             )}
         >
-            {isDarkMode ? (
-                <Sun className="h-6 w-6 text-yellow-300" />
-            ) : (
+            {isLightMode ? (
                 <Moon className="h-6 w-6 text-blue-900"/>
+            ) : (
+                <Sun className="h-6 w-6 text-yellow-300" />
             )}
         </button> 
     );
