@@ -4,15 +4,11 @@ import { Menu, X } from 'lucide-react';
 
 
 const navItems = [
-    { name: 'Home', href: '#hero' },
-    { name: 'About', href: '#about' },
-    { name: 'Skills', href: '#skills' },
-    { name: 'Projects', href: '#projects' },
-    { name: 'Contact', href: '#contact' },
+    { name: 'Home', href: '/' },
     { name: 'Blog', href: '/blog' },
 ];
 
-export const Navbar = () => {
+export const NavbarBlog = () => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     

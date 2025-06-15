@@ -12,3 +12,8 @@ TODO:
 - Center "Back to Top"
 - Make "View My Work" button hover similar to "Get In Touch"
 - Make "MySkills" category buttons hover similar to "Get In Touch"
+- Fix consistent ThemeToggle between pages (Blog & Home)
+    {/* Move ThemeToggle to a higher level, e.g., _app.jsx or a Layout component, to persist theme between pages */}
+
+
+- Add a smooth transition between pages (Blog and Home)
