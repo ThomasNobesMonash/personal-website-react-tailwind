@@ -4,39 +4,30 @@ import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 
 export const ThemeToggle = () => {
-    const [isLightMode, setisLightMode] = useState(false);
-    
+    const [isLightMode, setIsLightMode] = useState(() => {
+        // Check localStorage on initial render
+        if (typeof window !== "undefined") {
+            const storedTheme = localStorage.getItem("theme");
+            return storedTheme === "light";
+        }
+        return false;
+    });
+
     useEffect(() => {
-        const storedTheme = localStorage.getItem("theme");
-        if (storedTheme) {
-            if (storedTheme === "light") {
-                document.documentElement.classList.add("light");
-                setisLightMode(true);
-            } else {
-                document.documentElement.classList.remove("light");
-                setisLightMode(false);
-            }
-        } else {
-            // Default to light mode if no preference is stored
-            document.documentElement.classList.remove("light");
-            setisLightMode(false);
-        }
-    }, [])
-    
-    const toggleTheme = () => {
+        // Apply theme class on mount and when isLightMode changes
         if (isLightMode) {
-            document.documentElement.classList.remove("light");
-            localStorage.setItem("theme", "light");
-            setisLightMode(false);
-        }
-        else {
             document.documentElement.classList.add("light");
             localStorage.setItem("theme", "light");
-            setisLightMode(true);
+        } else {
+            document.documentElement.classList.remove("light");
+            localStorage.setItem("theme", "dark");
         }
+    }, [isLightMode]);
+
+    const toggleTheme = () => {
+        setIsLightMode((prev) => !prev);
     };
-        
-    
+
     return (
         <button
             onClick={toggleTheme}
@@ -50,7 +41,7 @@ export const ThemeToggle = () => {
             ) : (
                 <Sun className="h-6 w-6 text-yellow-300" />
             )}
-        </button> 
+        </button>
     );
-}
+};
     
