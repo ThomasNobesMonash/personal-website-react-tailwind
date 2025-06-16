@@ -30,7 +30,8 @@ export const HeroSection = () => {
                         Greetings from Melbourne, Australia!
                     </p>
                     
-                    <div className="pt-4 opacity-0 animate-fade-in-delay-4">
+                    <div className="pt-4 opacity-0 animate-fade-in-delay-4 flex flex-col sm:flex-row gap-4 justify-center">
+                        
                         <a href="#projects" className="cosmic-button">
                             View My Work
                         </a>

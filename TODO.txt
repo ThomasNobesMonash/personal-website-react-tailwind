@@ -1,10 +1,8 @@
 
 TODO:
 
-- Correct About Me text (important)
-- Upload a current CV 
 - Upload photos for JPS-3D and Youtube/Visualisation
-- Add a Blog Tab and a baseline blog - include JPS-3D discussion when this is made
+- Add blog post about JPS-3D discussion
 - Pay and set-up Toast through a cheap service like EmailJS (Contact Me boxes)
 - Setup correct links to LinkedIn, Youtube, Instagram
 - Use real email or create new business email
