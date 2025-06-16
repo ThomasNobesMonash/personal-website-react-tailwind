@@ -26,6 +26,10 @@ export const HeroSection = () => {
                         I teach a Masters subject on Planning and Automated Reasoning. I am the first author of JPS-3D.
                     </p>
                     
+                    <p>
+                        Greetings from Melbourne, Australia!
+                    </p>
+                    
                     <div className="pt-4 opacity-0 animate-fade-in-delay-4">
                         <a href="#projects" className="cosmic-button">
                             View My Work

@@ -11,18 +11,17 @@ export const AboutSection = () => {
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
                     <div className="space-y-6">
-                        <h3 className="text-2xl font-semibold"> Passionate Web Developer & Tech Creator</h3>
+                        <h3 className="text-2xl font-semibold"> Passionate Pathfinding Educator <br />& Researcher</h3>
                         
                         <p className="text-muted-foreground">
-                            With 5 minutes of experience in web devleopment, I specialise in 
-                            creating responsive, accessible, and barely working websites 
-                            using modern youtube tutorials.
+                            With 5 years of experience teaching and researching pathfinding algorithms, 
+                            I am dedicated to making complex concepts accessible and engaging.
                         </p>
                         
                         <p className="text-muted-foreground">
-                            I am passionate about building user-friendly interfaces that probably do
-                            not actually work if anything ever breaks in the future, where I would not 
-                            have the knowledge and ability to go about fixing it.
+                            I developed JPS-3D, the current state-of-the-art 3D pathfinding algorithm.
+                            I passionately teach a Masters subject on Planning and Reasoning at Monash University.
+                            I create educational content for aesthetic algorithm visualisations.
                         </p>
                         
                         <div className="flex flex-col sm:flex-row gap-4 pt-4 justify-center">
