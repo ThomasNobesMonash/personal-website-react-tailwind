@@ -1,25 +1,28 @@
 import { useEffect, useState } from "react";
 
+const GRID_SIZE = 40;
+const LARGE_GRID_SIZE = GRID_SIZE * 5;
+
 export const GridBackground = () => {
-    // Calculate scale to cover the screen after rotation
     const [scale, setScale] = useState(1.2);
+    const [dimensions, setDimensions] = useState({ width: window.innerWidth, height: window.innerHeight });
 
     useEffect(() => {
         const updateScale = () => {
-            const angle = 30 * (Math.PI / 180); // 30deg in radians
+            const angle = 30 * (Math.PI / 180);
             const { innerWidth: w, innerHeight: h } = window;
-            // Calculate bounding box after rotation
             const newWidth = Math.abs(w * Math.cos(angle)) + Math.abs(h * Math.sin(angle));
             const newHeight = Math.abs(w * Math.sin(angle)) + Math.abs(h * Math.cos(angle));
-            // Scale so that rotated svg covers the viewport
             const scaleX = newWidth / w;
             const scaleY = newHeight / h;
             setScale(Math.max(scaleX, scaleY));
+            setDimensions({ width: w, height: h });
         };
         updateScale();
         window.addEventListener("resize", updateScale);
         return () => window.removeEventListener("resize", updateScale);
     }, []);
+
 
     return (
         <div
@@ -36,8 +39,8 @@ export const GridBackground = () => {
             }}
         >
             <svg
-                width="100%"
-                height="100%"
+                width={dimensions.width + GRID_SIZE}
+                height={dimensions.height + GRID_SIZE}
                 style={{
                     display: "block",
                     transform: `rotate(30deg) scale(${scale})`,
@@ -47,8 +50,8 @@ export const GridBackground = () => {
                 <defs>
                     <pattern
                         id="grid"
-                        width="40"
-                        height="40"
+                        width={GRID_SIZE}
+                        height={GRID_SIZE}
                         patternUnits="userSpaceOnUse"
                     >
                         <path
@@ -56,14 +59,42 @@ export const GridBackground = () => {
                             fill="none"
                             stroke="#3af"
                             strokeWidth="1"
-                            opacity="0.4"
+                            opacity="0.3"
+                        />
+                    </pattern>
+                    <pattern
+                        id="large-grid"
+                        width={LARGE_GRID_SIZE}
+                        height={LARGE_GRID_SIZE}
+                        patternUnits="userSpaceOnUse"
+                    >
+                        <path
+                            d={`M ${LARGE_GRID_SIZE} 0 L 0 0 0 ${LARGE_GRID_SIZE}`}
+                            fill="none"
+                            stroke="#3af"
+                            strokeWidth="2.5"
+                            opacity="0.35"
                         />
                     </pattern>
                 </defs>
+                {/* Small grid */}
                 <rect
-                    width="100%"
-                    height="100%"
+                    x={-GRID_SIZE}
+                    y={-GRID_SIZE}
+                    width={dimensions.width + GRID_SIZE * 2}
+                    height={dimensions.height + GRID_SIZE * 2}
                     fill="url(#grid)"
+                />
+                {/* Large overlay grid */}
+                <rect
+                    x={-LARGE_GRID_SIZE}
+                    y={-LARGE_GRID_SIZE}
+                    width={dimensions.width + LARGE_GRID_SIZE * 2}
+                    height={dimensions.height + LARGE_GRID_SIZE * 2}
+                    fill="url(#large-grid)"
+                    style={{
+                        opacity: 0.8,
+                    }}
                 />
             </svg>
         </div>
