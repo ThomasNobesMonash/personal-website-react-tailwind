@@ -1,25 +1,70 @@
 import { useEffect, useState } from "react";
 
+const ANIMATION_DURATION = 100000; // ms
+const GRID_SIZE = 40;
+const NUM_ANIM_LINES = 4;
+
+function getAnimatedLines(width, height, t) {
+    // t: 0 to 1
+    const lines = [];
+    for (let i = 0; i < NUM_ANIM_LINES; i++) {
+        // Offset each line's animation
+        const phase = ((t + i / NUM_ANIM_LINES) % 1);
+        const x = phase * width;
+        lines.push({
+            x1: x,
+            y1: 0,
+            x2: x,
+            y2: height,
+            key: `v-${i}`,
+        });
+        const y = phase * height;
+        lines.push({
+            x1: 0,
+            y1: y,
+            x2: width,
+            y2: y,
+            key: `h-${i}`,
+        });
+    }
+    return lines;
+}
+
 export const GridBackground = () => {
-    // Calculate scale to cover the screen after rotation
     const [scale, setScale] = useState(1.2);
+    const [dimensions, setDimensions] = useState({ width: window.innerWidth, height: window.innerHeight });
+    const [animTime, setAnimTime] = useState(0);
 
     useEffect(() => {
         const updateScale = () => {
-            const angle = 30 * (Math.PI / 180); // 30deg in radians
+            const angle = 30 * (Math.PI / 180);
             const { innerWidth: w, innerHeight: h } = window;
-            // Calculate bounding box after rotation
             const newWidth = Math.abs(w * Math.cos(angle)) + Math.abs(h * Math.sin(angle));
             const newHeight = Math.abs(w * Math.sin(angle)) + Math.abs(h * Math.cos(angle));
-            // Scale so that rotated svg covers the viewport
             const scaleX = newWidth / w;
             const scaleY = newHeight / h;
             setScale(Math.max(scaleX, scaleY));
+            setDimensions({ width: w, height: h });
         };
         updateScale();
         window.addEventListener("resize", updateScale);
         return () => window.removeEventListener("resize", updateScale);
     }, []);
+
+    useEffect(() => {
+        let frame;
+        const start = performance.now();
+        const animate = (now) => {
+            const elapsed = (now - start) % ANIMATION_DURATION;
+            setAnimTime(elapsed / ANIMATION_DURATION);
+            frame = requestAnimationFrame(animate);
+        };
+        frame = requestAnimationFrame(animate);
+        return () => cancelAnimationFrame(frame);
+    }, []);
+
+    const { width, height } = dimensions;
+    const animatedLines = getAnimatedLines(width, height, animTime);
 
     return (
         <div
@@ -47,8 +92,8 @@ export const GridBackground = () => {
                 <defs>
                     <pattern
                         id="grid"
-                        width="40"
-                        height="40"
+                        width={GRID_SIZE}
+                        height={GRID_SIZE}
                         patternUnits="userSpaceOnUse"
                     >
                         <path
@@ -65,6 +110,23 @@ export const GridBackground = () => {
                     height="100%"
                     fill="url(#grid)"
                 />
+                {/* Animated lines */}
+                {animatedLines.map(line => (
+                    <line
+                        key={line.key}
+                        x1={line.x1}
+                        y1={line.y1}
+                        x2={line.x2}
+                        y2={line.y2}
+                        stroke="#fff"
+                        strokeWidth="2"
+                        opacity="0.8"
+                        style={{
+                            filter: "drop-shadow(0 0 8px #fff)",
+                            transition: "opacity 0.2s",
+                        }}
+                    />
+                ))}
             </svg>
         </div>
     );
