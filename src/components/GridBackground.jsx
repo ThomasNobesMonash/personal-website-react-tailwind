@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 const GRID_SIZE = 40;
+const LARGE_GRID_SIZE = GRID_SIZE * 5;
 
 export const GridBackground = () => {
     const [scale, setScale] = useState(1.2);
@@ -21,6 +22,7 @@ export const GridBackground = () => {
         window.addEventListener("resize", updateScale);
         return () => window.removeEventListener("resize", updateScale);
     }, []);
+
 
     return (
         <div
@@ -60,13 +62,39 @@ export const GridBackground = () => {
                             opacity="0.4"
                         />
                     </pattern>
+                    <pattern
+                        id="large-grid"
+                        width={LARGE_GRID_SIZE}
+                        height={LARGE_GRID_SIZE}
+                        patternUnits="userSpaceOnUse"
+                    >
+                        <path
+                            d={`M ${LARGE_GRID_SIZE} 0 L 0 0 0 ${LARGE_GRID_SIZE}`}
+                            fill="none"
+                            stroke="#3af"
+                            strokeWidth="2.5"
+                            opacity="0.7"
+                        />
+                    </pattern>
                 </defs>
+                {/* Small grid */}
                 <rect
                     x={-GRID_SIZE}
                     y={-GRID_SIZE}
                     width={dimensions.width + GRID_SIZE * 2}
                     height={dimensions.height + GRID_SIZE * 2}
                     fill="url(#grid)"
+                />
+                {/* Large overlay grid */}
+                <rect
+                    x={-LARGE_GRID_SIZE}
+                    y={-LARGE_GRID_SIZE}
+                    width={dimensions.width + LARGE_GRID_SIZE * 2}
+                    height={dimensions.height + LARGE_GRID_SIZE * 2}
+                    fill="url(#large-grid)"
+                    style={{
+                        opacity: 0.8,
+                    }}
                 />
             </svg>
         </div>
