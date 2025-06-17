@@ -1,48 +1,10 @@
 import { useEffect, useState } from "react";
 
-const ANIMATION_DURATION = 100000; // ms
 const GRID_SIZE = 40;
-const NUM_ANIM_LINES = 4;
-function getAnimatedLines(width, height, t) {
-    // t: 0 to 1
-    const lines = [];
-    for (let i = 0; i < NUM_ANIM_LINES; i++) {
-        // Offset each line's animation
-        const phase = ((t + i / NUM_ANIM_LINES) % 1);
-        const x = phase * width;
-        // Calculate opacity: higher in center (0.8), lower at edges (0.3)
-        const centerDistX = Math.abs((x / width) - 0.5) * 2; // 0 at center, 1 at edge
-        const opacityX = 0.8 - 0.5 * centerDistX; // 0.8 in center, 0.3 at edge
-
-        lines.push({
-            x1: x,
-            y1: 0,
-            x2: x,
-            y2: height,
-            key: `v-${i}`,
-            opacity: opacityX,
-        });
-
-        const y = phase * height;
-        const centerDistY = Math.abs((y / height) - 0.5) * 2;
-        const opacityY = 0.8 - 0.5 * centerDistY; // 0.8 in center, 0.3 at edge
-
-        lines.push({
-            x1: 0,
-            y1: y,
-            x2: width,
-            y2: y,
-            key: `h-${i}`,
-            opacity: opacityY,
-        });
-    }
-    return lines;
-}
 
 export const GridBackground = () => {
     const [scale, setScale] = useState(1.2);
     const [dimensions, setDimensions] = useState({ width: window.innerWidth, height: window.innerHeight });
-    const [animTime, setAnimTime] = useState(0);
 
     useEffect(() => {
         const updateScale = () => {
@@ -60,21 +22,6 @@ export const GridBackground = () => {
         return () => window.removeEventListener("resize", updateScale);
     }, []);
 
-    useEffect(() => {
-        let frame;
-        const start = performance.now();
-        const animate = (now) => {
-            const elapsed = (now - start) % ANIMATION_DURATION;
-            setAnimTime(elapsed / ANIMATION_DURATION);
-            frame = requestAnimationFrame(animate);
-        };
-        frame = requestAnimationFrame(animate);
-        return () => cancelAnimationFrame(frame);
-    }, []);
-
-    const { width, height } = dimensions;
-    const animatedLines = getAnimatedLines(width, height, animTime);
-
     return (
         <div
             style={{
@@ -90,8 +37,8 @@ export const GridBackground = () => {
             }}
         >
             <svg
-                width="100%"
-                height="100%"
+                width={dimensions.width + GRID_SIZE}
+                height={dimensions.height + GRID_SIZE}
                 style={{
                     display: "block",
                     transform: `rotate(30deg) scale(${scale})`,
@@ -115,27 +62,12 @@ export const GridBackground = () => {
                     </pattern>
                 </defs>
                 <rect
-                    width="100%"
-                    height="100%"
+                    x={-GRID_SIZE}
+                    y={-GRID_SIZE}
+                    width={dimensions.width + GRID_SIZE * 2}
+                    height={dimensions.height + GRID_SIZE * 2}
                     fill="url(#grid)"
                 />
-                {/* Animated lines */}
-                {animatedLines.map(line => (
-                    <line
-                        key={line.key}
-                        x1={line.x1}
-                        y1={line.y1}
-                        x2={line.x2}
-                        y2={line.y2}
-                        stroke="#3af"
-                        strokeWidth="2"
-                        opacity="0.8"
-                        style={{
-                            filter: "drop-shadow(0 0 8px #3af)",
-                            transition: "opacity 0.2s",
-                        }}
-                    />
-                ))}
             </svg>
         </div>
     );
