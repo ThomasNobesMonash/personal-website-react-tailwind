@@ -59,7 +59,7 @@ export const GridBackground = () => {
                             fill="none"
                             stroke="#3af"
                             strokeWidth="1"
-                            opacity="0.4"
+                            opacity="0.3"
                         />
                     </pattern>
                     <pattern
@@ -73,7 +73,7 @@ export const GridBackground = () => {
                             fill="none"
                             stroke="#3af"
                             strokeWidth="2.5"
-                            opacity="0.7"
+                            opacity="0.35"
                         />
                     </pattern>
                 </defs>
