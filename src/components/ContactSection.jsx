@@ -2,8 +2,34 @@ import { Linkedin, Mail, MapPin, Instagram, Youtube, Send } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
+import { useRef } from 'react';
+import emailjs from '@emailjs/browser';
+
 
 export const ContactSection = () => {
+    // Loading emailJS
+    const form = useRef();
+
+    const sendEmail = (e) => {
+        e.preventDefault();
+
+        emailjs
+            .sendForm(
+                'service_jdzj57p',
+                'template_anmypvp',
+                form.current,
+                "lAtpkqzw_LLkSCOmh"
+            )
+            .then(
+            () => {
+                console.log('SUCCESS!');
+            },
+            (error) => {
+                console.log('FAILED...', error.text);
+            },
+            );
+    };
+    
     const { toast } = useToast();
     const [isSubmitting, setIsSubmitting] = useState(false);
     
@@ -93,7 +119,7 @@ export const ContactSection = () => {
                     >
                         <h3 className="text-2xl font-semibold mb06"> Send a Message </h3>
                         
-                        <form className="space-y-6">
+                        <form className="space-y-6" ref={form} onSubmit={sendEmail}>
                             <div>
                                 <label
                                     htmlFor="name"
